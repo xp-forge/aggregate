@@ -7,7 +7,7 @@ Aggregate data on lists
 [![Supports PHP 7.0+](https://raw.githubusercontent.com/xp-framework/web/master/static/php-7_0plus.png)](http://php.net/)
 [![Latest Stable Version](https://poser.pugx.org/xp-forge/aggregate/version.png)](https://packagist.org/packages/xp-forge/aggregate)
 
-This API allows working with data sequences of different kinds in a functional style, e.g. map/reduce.
+Circumvents [`n + 1`-problems](https://stackoverflow.com/questions/97197/what-is-the-n1-selects-problem-in-orm-object-relational-mapping) often occuring with SQL queries. 
 
 Example
 -------
