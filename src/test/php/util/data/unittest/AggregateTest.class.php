@@ -22,21 +22,21 @@ class AggregateTest extends TestCase {
   ];
 
   /** Selects posts with given author IDs */
-  private static function postsFor(array $authorIds): iterable {
+  private static function postsFor(array $authorIds) {
     foreach (self::$posts as $post) {
       if (in_array($post['authorId'], $authorIds)) yield $post;
     }
   }
 
   /** Selects comments with given author IDs */
-  private static function commentsFor(array $authorIds): iterable {
+  private static function commentsFor(array $authorIds) {
     foreach (self::$comments as $comment) {
       if (in_array($comment['authorId'], $authorIds)) yield $comment;
     }
   }
 
   /** Selects comments with given author IDs */
-  private static function likesFor(string $kind, array $objectIds): iterable {
+  private static function likesFor(string $kind, array $objectIds) {
     foreach (self::$likes as $like) {
       if ($kind === $like['kind'] && in_array($like['objectId'], $objectIds)) yield $like;
     }
