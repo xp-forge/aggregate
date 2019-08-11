@@ -1,6 +1,8 @@
 <?php namespace util\data\unittest;
 
+use lang\IllegalArgumentException;
 use unittest\TestCase;
+use util\Bytes;
 use util\data\Aggregate;
 
 class AggregateTest extends TestCase {
@@ -43,13 +45,29 @@ class AggregateTest extends TestCase {
   }
 
   #[@test]
-  public function can_create() {
+  public function can_create_from_iterator() {
+    Aggregate::of(new Bytes('abc'));
+  }
+
+  #[@test]
+  public function can_create_from_generator() {
+    $f= function() { yield 1; yield 2; yield 3; };
+    Aggregate::of($f());
+  }
+
+  #[@test]
+  public function can_create_from_array() {
     Aggregate::of([]);
+  }
+
+  #[@test, @expect(IllegalArgumentException::class)]
+  public function cannot_create_from_non_iterable() {
+    Aggregate::of(null);
   }
 
   #[@test]
   public function is_iterable() {
-    $this->assertTrue(is_iterable(Aggregate::of([])));
+    $this->assertTrue(Aggregate::of([]) instanceof \Traversable);
   }
 
   #[@test, @values([

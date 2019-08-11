@@ -1,5 +1,7 @@
 <?php namespace util\data;
 
+use lang\IllegalArgumentException;
+
 class Aggregate implements \IteratorAggregate {
   private $elements, $aggregate= [];
 
@@ -8,11 +10,15 @@ class Aggregate implements \IteratorAggregate {
    *
    * @param  iterable $elements The collection
    * @return self
+   * @throws lang.IllegalArgumentException
    */
-  public static function of(iterable $elements): self {
-    $self= new self();
-    $self->elements= $elements;
-    return $self;
+  public static function of($elements): self {
+    if ($elements instanceof \Traversable || is_array($elements)) {
+      $self= new self();
+      $self->elements= $elements;
+      return $self;
+    }
+    throw new IllegalArgumentException('Expected an iterable type');
   }
 
   /**
