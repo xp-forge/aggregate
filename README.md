@@ -19,7 +19,7 @@ use rdbms\DriverManager;
 
 $conn= DriverManager::getConnection($dsn);
 $posts= Aggregate::of($conn->query('select * from post'))
-  ->collect('comments', ['id' => 'post_id'], function($ids) {
+  ->collect('comments', ['id' => 'post_id'], function($ids) use($conn) {
     return $conn->query('select * from comment where post_id in (%d)', $ids);
   })
   ->all()
