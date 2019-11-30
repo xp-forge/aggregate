@@ -1,11 +1,12 @@
 <?php namespace util\data\unittest;
 
 use lang\IllegalArgumentException;
+use unittest\Assert;
 use unittest\TestCase;
 use util\Bytes;
 use util\data\Aggregate;
 
-class AggregateTest extends TestCase {
+class AggregateTest {
   private static $posts= [
     ['postId' => 1, 'authorId' => 1, 'text' => 'Post #1'],
     ['postId' => 2, 'authorId' => 1, 'text' => 'Post #2'],
@@ -67,7 +68,7 @@ class AggregateTest extends TestCase {
 
   #[@test]
   public function is_iterable() {
-    $this->assertTrue(Aggregate::of([]) instanceof \Traversable);
+    Assert::true(Aggregate::of([]) instanceof \Traversable);
   }
 
   #[@test, @values([
@@ -76,7 +77,7 @@ class AggregateTest extends TestCase {
   #  [[['id' => 1], ['id' => 2]]],
   #])]
   public function without_collecting_returns($input) {
-    $this->assertEquals($input, Aggregate::of($input)->all());
+    Assert::equals($input, Aggregate::of($input)->all());
   }
 
   #[@test]
@@ -85,7 +86,7 @@ class AggregateTest extends TestCase {
       ->collect('posts', ['personId' => 'authorId'], function($ids) { return self::postsFor($ids); })
       ->all()
     ;
-    $this->assertEquals(
+    Assert::equals(
       [
         ['personId' => 1, 'posts' => [self::$posts[0], self::$posts[1]]],
         ['personId' => 2, 'posts' => [self::$posts[2]]],
@@ -100,7 +101,7 @@ class AggregateTest extends TestCase {
       ->collect('posts', ['personId' => 'authorId'], function($ids) { return self::postsFor($ids); })
       ->all()
     ;
-    $this->assertEquals([], $aggregate);
+    Assert::equals([], $aggregate);
   }
 
   #[@test]
@@ -113,7 +114,7 @@ class AggregateTest extends TestCase {
       })
       ->all()
     ;
-    $this->assertEquals(
+    Assert::equals(
       [
         ['personId' => 1, 'posts' => [
           self::$posts[0] + ['comments' => [self::$comments[0]]],
@@ -142,7 +143,7 @@ class AggregateTest extends TestCase {
       })
       ->all()
     ;
-    $this->assertEquals(
+    Assert::equals(
       [
         ['personId' => 1, 'posts' => [
           self::$posts[0] + [
@@ -171,7 +172,7 @@ class AggregateTest extends TestCase {
       ->collect('posts', ['personId' => 'authorId'], function($ids) { return self::postsFor($ids); })
       ->all()
     ;
-    $this->assertEquals(
+    Assert::equals(
       [
         ['personId' => 1, 'posts' => [self::$posts[0], self::$posts[1]]],
         ['personId' => 3, 'posts' => []],
