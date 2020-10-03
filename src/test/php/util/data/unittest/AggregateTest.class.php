@@ -1,8 +1,7 @@
 <?php namespace util\data\unittest;
 
 use lang\IllegalArgumentException;
-use unittest\Assert;
-use unittest\TestCase;
+use unittest\{Assert, Expect, Test, TestCase, Values};
 use util\Bytes;
 use util\data\Aggregate;
 
@@ -45,42 +44,38 @@ class AggregateTest {
     }
   }
 
-  #[@test]
+  #[Test]
   public function can_create_from_iterator() {
     Aggregate::of(new Bytes('abc'));
   }
 
-  #[@test]
+  #[Test]
   public function can_create_from_generator() {
     $f= function() { yield 1; yield 2; yield 3; };
     Aggregate::of($f());
   }
 
-  #[@test]
+  #[Test]
   public function can_create_from_array() {
     Aggregate::of([]);
   }
 
-  #[@test, @expect(IllegalArgumentException::class)]
+  #[Test, Expect(IllegalArgumentException::class)]
   public function cannot_create_from_non_iterable() {
     Aggregate::of(null);
   }
 
-  #[@test]
+  #[Test]
   public function is_iterable() {
     Assert::true(Aggregate::of([]) instanceof \Traversable);
   }
 
-  #[@test, @values([
-  #  [[]],
-  #  [[['id' => 1]]],
-  #  [[['id' => 1], ['id' => 2]]],
-  #])]
+  #[Test, Values([[[]], [[['id' => 1]]], [[['id' => 1], ['id' => 2]]],])]
   public function without_collecting_returns($input) {
     Assert::equals($input, Aggregate::of($input)->all());
   }
 
-  #[@test]
+  #[Test]
   public function collect() {
     $aggregate= Aggregate::of([['personId' => 1], ['personId' => 2]])
       ->collect('posts', ['personId' => 'authorId'], function($ids) { return self::postsFor($ids); })
@@ -95,7 +90,7 @@ class AggregateTest {
     );
   }
 
-  #[@test]
+  #[Test]
   public function collect_on_empty() {
     $aggregate= Aggregate::of([])
       ->collect('posts', ['personId' => 'authorId'], function($ids) { return self::postsFor($ids); })
@@ -104,7 +99,7 @@ class AggregateTest {
     Assert::equals([], $aggregate);
   }
 
-  #[@test]
+  #[Test]
   public function collect_nested() {
     $aggregate= Aggregate::of([['personId' => 1], ['personId' => 2]])
       ->collect('posts', ['personId' => 'authorId'], function($ids) {
@@ -128,7 +123,7 @@ class AggregateTest {
     );
   }
 
-  #[@test]
+  #[Test]
   public function collect_multiple() {
     $aggregate= Aggregate::of([['personId' => 1], ['personId' => 2]])
       ->collect('posts', ['personId' => 'authorId'], function($ids) {
@@ -166,7 +161,7 @@ class AggregateTest {
     );
   }
 
-  #[@test]
+  #[Test]
   public function yields_empty_list_if_nothing_collected() {
     $aggregate= Aggregate::of([['personId' => 1], ['personId' => 3]])
       ->collect('posts', ['personId' => 'authorId'], function($ids) { return self::postsFor($ids); })
