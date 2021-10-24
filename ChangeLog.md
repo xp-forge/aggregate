@@ -3,7 +3,7 @@ Data aggregation change log
 
 ## ?.?.? / ????-??-??
 
-## 1.0.0 / 2021-10-25
+## 1.0.1 / 2021-10-25
 
 * Made compatible with XP 11, PHP 8.1 - @thekid
 
