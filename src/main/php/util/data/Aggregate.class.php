@@ -1,8 +1,9 @@
 <?php namespace util\data;
 
+use IteratorAggregate, Traversable;
 use lang\IllegalArgumentException;
 
-class Aggregate implements \IteratorAggregate {
+class Aggregate implements IteratorAggregate {
   private $elements, $aggregate= [];
 
   /**
@@ -34,8 +35,8 @@ class Aggregate implements \IteratorAggregate {
     return $this;
   }
 
-  /** @return iterable */
-  public function getIterator() {
+  /** Iterates over elements in this aggregation */
+  public function getIterator(): Traversable {
     $yield= [];
 
     // Gather all IDs in unique list
