@@ -1,7 +1,7 @@
 <?php namespace util\data\unittest;
 
 use lang\IllegalArgumentException;
-use unittest\{Assert, Expect, Test, TestCase, Values};
+use test\{Assert, Expect, Test, TestCase, Values};
 use util\Bytes;
 use util\data\Aggregate;
 
