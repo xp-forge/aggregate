@@ -3,6 +3,10 @@ Data aggregation change log
 
 ## ?.?.? / ????-??-??
 
+## 1.1.0 / 2024-03-24
+
+* Made compatible with XP 12 - @thekid
+
 ## 1.0.1 / 2021-10-25
 
 * Made compatible with XP 11, PHP 8.1 - @thekid
